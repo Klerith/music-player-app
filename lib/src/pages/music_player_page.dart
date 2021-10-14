@@ -93,7 +93,7 @@ class _TituloPlayState extends State<TituloPlay> with SingleTickerProviderStateM
 
   bool isPlaying = false;
   bool firstTime = true;
-  AnimationController playAnimation;
+  late AnimationController playAnimation;
 
 
   final assetAudioPlayer = new AssetsAudioPlayer();
@@ -116,14 +116,20 @@ class _TituloPlayState extends State<TituloPlay> with SingleTickerProviderStateM
 
     final audioPlayerModel = Provider.of<AudioPlayerModel>(context, listen: false);
 
-    assetAudioPlayer.open('assets/Breaking-Benjamin-Far-Away.mp3');
+    //! assetAudioPlayer.open('assets/Breaking-Benjamin-Far-Away.mp3');
+    assetAudioPlayer.open(
+      Audio('assets/Breaking-Benjamin-Far-Away.mp3'),
+      autoStart: true,
+      showNotification: true
+    );
 
     assetAudioPlayer.currentPosition.listen( (duration) {
       audioPlayerModel.current = duration;
     });
-
+  
     assetAudioPlayer.current.listen( (playingAudio){
-      audioPlayerModel.songDuration = playingAudio.duration;
+      //! audioPlayerModel.songDuration = playingAudio.duration;
+      audioPlayerModel.songDuration = playingAudio?.audio.duration ?? Duration(seconds: 0);
     });
 
 
@@ -196,7 +202,7 @@ class ImagenDiscoDuracion extends StatelessWidget {
         children: <Widget>[
 
           ImagenDisco(),
-          SizedBox( width: 40 ),
+          SizedBox( width: 20 ),
 
           BarraProgreso(),
           SizedBox( width: 20 ),

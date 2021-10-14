@@ -16,7 +16,7 @@ class AudioPlayerModel  with ChangeNotifier {
 
 
 
-  AnimationController _controller;
+  late AnimationController _controller;
   set controller( AnimationController valor ) {
     this._controller = valor;
   }
